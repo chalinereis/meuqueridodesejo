@@ -10,6 +10,8 @@ use App\Http\Controllers\InvitationController;
 use App\Http\Controllers\CartItemController;
 use App\Http\Controllers\DreamWishController;
 
+//Adicionar exempos depois aqui pra lembrar como usar cada rota
+
 // Rotas para a entidade `users`
 Route::get('/users', [UserController::class, 'index']);
 Route::get('/users/{id}', [UserController::class, 'show']);
