@@ -1,69 +1,154 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\DreamController;
-use App\Http\Controllers\WishController;
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\WishSuggestionController;
-use App\Http\Controllers\InvitationController;
-use App\Http\Controllers\CartItemController;
-use App\Http\Controllers\DreamWishController;
+use App\Http\Controllers\{
+    AuthController, // Adicione o controlador de autenticação
+    UserController,
+    DreamController,
+    WishController,
+    CategoryController,
+    WishSuggestionController,
+    InvitationController,
+    CartItemController,
+    DreamWishController
+};
 
-//Adicionar exempos depois aqui pra lembrar como usar cada rota
+// Rotas de Autenticação
+Route::controller(AuthController::class)->group(function () {
+    Route::post('/register', 'register');
+    Route::post('/login', 'login');
+    Route::middleware('auth:sanctum')->group(function () {
+        Route::post('/logout', 'logout');
+        Route::get('/user', 'user');
+    });
+});
 
-// Rotas para a entidade `users`
-Route::get('/users', [UserController::class, 'index']);
-Route::get('/users/{id}', [UserController::class, 'show']);
-Route::post('/users', [UserController::class, 'store']);
-Route::put('/users/{id}', [UserController::class, 'update']);
-Route::delete('/users/{id}', [UserController::class, 'destroy']);
+// Rotas protegidas para `users`
+Route::prefix('users')->middleware('auth:sanctum')->controller(UserController::class)->group(function () {
+    Route::get('/', 'index');
+    Route::get('/{id}', 'show');
+    Route::post('/', 'store');
+    Route::put('/{id}', 'update');
+    Route::delete('/{id}', 'destroy');
+});
 
-// Rotas para a entidade `dreams`
-Route::get('/dreams', [DreamController::class, 'index']);
-Route::get('/dreams/{id}', [DreamController::class, 'show']);
-Route::post('/dreams', [DreamController::class, 'store']);
-Route::put('/dreams/{id}', [DreamController::class, 'update']);
-Route::delete('/dreams/{id}', [DreamController::class, 'destroy']);
+// Rotas protegidas para `dreams`
+Route::prefix('dreams')->middleware('auth:sanctum')->controller(DreamController::class)->group(function () {
+    Route::get('/', 'index');
+    Route::get('/{id}', 'show');
+    Route::post('/', 'store');
+    Route::put('/{id}', 'update');
+    Route::delete('/{id}', 'destroy');
+});
 
-// Rotas para a entidade `wishes`
-Route::get('/wishes', [WishController::class, 'index']);
-Route::get('/wishes/{id}', [WishController::class, 'show']);
-Route::post('/wishes', [WishController::class, 'store']);
-Route::put('/wishes/{id}', [WishController::class, 'update']);
-Route::delete('/wishes/{id}', [WishController::class, 'destroy']);
+// Rotas protegidas para `wishes`
+Route::prefix('wishes')->middleware('auth:sanctum')->controller(WishController::class)->group(function () {
+    Route::get('/', 'index');
+    Route::get('/{id}', 'show');
+    Route::post('/', 'store');
+    Route::put('/{id}', 'update');
+    Route::delete('/{id}', 'destroy');
+});
 
-// Rotas para a entidade `categories`
-Route::get('/categories', [CategoryController::class, 'index']);
-Route::get('/categories/{id}', [CategoryController::class, 'show']);
-Route::post('/categories', [CategoryController::class, 'store']);
-Route::put('/categories/{id}', [CategoryController::class, 'update']);
-Route::delete('/categories/{id}', [CategoryController::class, 'destroy']);
+// Rotas protegidas para `categories`
+Route::prefix('categories')->middleware('auth:sanctum')->controller(CategoryController::class)->group(function () {
+    Route::get('/', 'index');
+    Route::get('/{id}', 'show');
+    Route::post('/', 'store');
+    Route::put('/{id}', 'update');
+    Route::delete('/{id}', 'destroy');
+});
 
-// Rotas para a entidade `wish_suggestions`
-Route::get('/wish-suggestions', [WishSuggestionController::class, 'index']);
-Route::get('/wish-suggestions/{id}', [WishSuggestionController::class, 'show']);
-Route::post('/wish-suggestions', [WishSuggestionController::class, 'store']);
-Route::put('/wish-suggestions/{id}', [WishSuggestionController::class, 'update']);
-Route::delete('/wish-suggestions/{id}', [WishSuggestionController::class, 'destroy']);
+// Rotas protegidas para `wish_suggestions`
+Route::prefix('wish-suggestions')->middleware('auth:sanctum')->controller(WishSuggestionController::class)->group(function () {
+    Route::get('/', 'index');
+    Route::get('/{id}', 'show');
+    Route::post('/', 'store');
+    Route::put('/{id}', 'update');
+    Route::delete('/{id}', 'destroy');
+});
 
-// Rotas para a entidade `invitations`
-Route::get('/invitations', [InvitationController::class, 'index']);
-Route::get('/invitations/{id}', [InvitationController::class, 'show']);
-Route::post('/invitations', [InvitationController::class, 'store']);
-Route::put('/invitations/{id}', [InvitationController::class, 'update']);
-Route::delete('/invitations/{id}', [InvitationController::class, 'destroy']);
+// Rotas protegidas para `invitations`
+Route::prefix('invitations')->middleware('auth:sanctum')->controller(InvitationController::class)->group(function () {
+    Route::get('/', 'index');
+    Route::get('/{id}', 'show');
+    Route::post('/', 'store');
+    Route::put('/{id}', 'update');
+    Route::delete('/{id}', 'destroy');
+});
 
-// Rotas para a entidade `cart_items`
-Route::get('/cart-items', [CartItemController::class, 'index']);
-Route::get('/cart-items/{id}', [CartItemController::class, 'show']);
-Route::post('/cart-items', [CartItemController::class, 'store']);
-Route::put('/cart-items/{id}', [CartItemController::class, 'update']);
-Route::delete('/cart-items/{id}', [CartItemController::class, 'destroy']);
+// Rotas protegidas para `cart_items`
+Route::prefix('cart-items')->middleware('auth:sanctum')->controller(CartItemController::class)->group(function () {
+    Route::get('/', 'index');
+    Route::get('/{id}', 'show');
+    Route::post('/', 'store');
+    Route::put('/{id}', 'update');
+    Route::delete('/{id}', 'destroy');
+});
 
-// Rotas para a entidade `dream_wishes`
-Route::get('/dream-wishes', [DreamWishController::class, 'index']);
-Route::get('/dream-wishes/{dream_id}/{wish_id}', [DreamWishController::class, 'show']);
-Route::post('/dream-wishes', [DreamWishController::class, 'store']);
-Route::put('/dream-wishes/{dream_id}/{wish_id}', [DreamWishController::class, 'update']);
-Route::delete('/dream-wishes/{dream_id}/{wish_id}', [DreamWishController::class, 'destroy']);
+// Rotas protegidas para `dream_wishes`
+Route::prefix('dream-wishes')->middleware('auth:sanctum')->controller(DreamWishController::class)->group(function () {
+    Route::get('/', 'index');
+    Route::get('/{dream_id}/{wish_id}', 'show');
+    Route::post('/', 'store');
+    Route::put('/{dream_id}/{wish_id}', 'update');
+    Route::delete('/{dream_id}/{wish_id}', 'destroy');
+});
+
+
+// Rotas para `users`
+    // GET /users - Lista todos os usuários
+    // GET /users/{id} - Exibe um usuário específico
+    // POST /users - Cria um novo usuário
+    // PUT /users/{id} - Atualiza um usuário específico
+    // DELETE /users/{id} - Remove um usuário específico
+
+// Rotas para `dreams`
+    // GET /dreams - Lista todos os sonhos
+    // GET /dreams/{id} - Exibe um sonho específico
+    // POST /dreams - Cria um novo sonho
+    // PUT /dreams/{id} - Atualiza um sonho específico
+    // DELETE /dreams/{id} - Remove um sonho específico
+
+// Rotas para `wishes`
+    // GET /wishes - Lista todos os desejos
+    // GET /wishes/{id} - Exibe um desejo específico
+    // POST /wishes - Cria um novo desejo
+    // PUT /wishes/{id} - Atualiza um desejo específico
+    // DELETE /wishes/{id} - Remove um desejo específico
+
+// Rotas para `categories`
+    // GET /categories - Lista todas as categorias
+    // GET /categories/{id} - Exibe uma categoria específica
+    // POST /categories - Cria uma nova categoria
+    // PUT /categories/{id} - Atualiza uma categoria específica
+    // DELETE /categories/{id} - Remove uma categoria específica
+
+// Rotas para `wish_suggestions`
+    // GET /wish-suggestions - Lista todas as sugestões de desejos
+    // GET /wish-suggestions/{id} - Exibe uma sugestão específica
+    // POST /wish-suggestions - Cria uma nova sugestão de desejo
+    // PUT /wish-suggestions/{id} - Atualiza uma sugestão de desejo específica
+    // DELETE /wish-suggestions/{id} - Remove uma sugestão de desejo específica
+
+// Rotas para `invitations`
+    // GET /invitations - Lista todos os convites
+    // GET /invitations/{id} - Exibe um convite específico
+    // POST /invitations - Cria um novo convite
+    // PUT /invitations/{id} - Atualiza um convite específico
+    // DELETE /invitations/{id} - Remove um convite específico
+
+// Rotas para `cart_items`
+    // GET /cart-items - Lista todos os itens no carrinho
+    // GET /cart-items/{id} - Exibe um item específico do carrinho
+    // POST /cart-items - Adiciona um novo item ao carrinho
+    // PUT /cart-items/{id} - Atualiza um item específico do carrinho
+    // DELETE /cart-items/{id} - Remove um item específico do carrinho
+
+// Rotas para `dream_wishes`
+    // GET /dream-wishes - Lista todas as associações de sonhos e desejos
+    // GET /dream-wishes/{dream_id}/{wish_id} - Exibe uma associação específica
+    // POST /dream-wishes - Cria uma nova associação de sonho e desejo
+    // PUT /dream-wishes/{dream_id}/{wish_id} - Atualiza uma associação específica
+    // DELETE /dream-wishes/{dream_id}/{wish_id} - Remove uma associação específica
+
