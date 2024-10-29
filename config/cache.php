@@ -41,9 +41,9 @@ return [
         'database' => [
             'driver' => 'database',
             'connection' => env('DB_CACHE_CONNECTION'),
-            'table' => env('DB_CACHE_TABLE', 'cache'),
+            'table' => 'project_cache',           // Tabela personalizada para cache
             'lock_connection' => env('DB_CACHE_LOCK_CONNECTION'),
-            'lock_table' => env('DB_CACHE_LOCK_TABLE'),
+            'lock_table' => 'project_cache_locks', // Tabela personalizada para locks
         ],
 
         'file' => [
