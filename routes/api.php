@@ -94,3 +94,7 @@ Route::prefix('dream-wishes')->middleware('auth:sanctum')->controller(DreamWishC
     Route::put('/{dream_id}/{wish_id}', 'update');
     Route::delete('/{dream_id}/{wish_id}', 'destroy');
 });
+
+Route::get('/', function () {
+    return response()->json(['message' => 'API is running']);
+});

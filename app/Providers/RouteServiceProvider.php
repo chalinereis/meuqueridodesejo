@@ -13,7 +13,7 @@ class RouteServiceProvider extends ServiceProvider
     public function map(): void
     {
         $this->mapApiRoutes();
-        $this->mapWebRoutes();
+        // Não inclua a chamada para mapWebRoutes()
     }
 
     /**
@@ -24,14 +24,5 @@ class RouteServiceProvider extends ServiceProvider
         Route::prefix('api')
             ->middleware('api')
             ->group(base_path('routes/api.php'));
-    }
-
-    /**
-     * Define as rotas da web.
-     */
-    protected function mapWebRoutes(): void
-    {
-        Route::middleware('web')
-            ->group(base_path('routes/web.php'));
     }
 }
