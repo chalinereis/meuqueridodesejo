@@ -8,18 +8,16 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class DreamWish extends Model
 {
     protected $table = 'dream_wishes'; // Nome da tabela
-    public $timestamps = false; // Caso a tabela não tenha timestamps
+    // Public $timestamps = true; // Deixe assim se você deseja rastrear timestamps
 
     protected $fillable = [
         'dream_id',
         'wish_id',
-        'priority'
+        'priority',
     ];
 
     /**
      * Relação com o modelo Dream.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function dream(): BelongsTo
     {
@@ -28,8 +26,6 @@ class DreamWish extends Model
 
     /**
      * Relação com o modelo Wish.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function wish(): BelongsTo
     {
